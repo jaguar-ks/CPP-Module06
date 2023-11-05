@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 13:28:18 by faksouss          #+#    #+#             */
-/*   Updated: 2023/11/04 15:35:04 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:28:22 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,32 @@ const char *ScalarConverter::DoubleException::what() const throw(){
     return "impossible to convert to double";
 }
 
+bool validInput( std::string input ){
+    if (input.empty())
+        return false;
+    if (input == "nan" || input == "nanf" || input == "-inf" || input == "+inf" || input == "-inff" || input == "+inff")
+        return true;
+    else {
+        if (input[0] == '-' || input[0] == '+')
+            input.erase(0, 1);
+        if (input.empty())
+            return false;
+        int dot = 0;
+        for (int i = 0; i < (int)input.length(); i++) {
+            if (input[i] == '.'){
+                if (dot == 1)
+                    return false;
+                dot++;
+            }
+            else if (isdigit(input[i]) == false && input[i] != 'f')
+                return false;
+            else if (input[i] == 'f' && i != (int)input.length() - 1)
+                return false;
+        }
+        return true;
+    }
+}
+
 void ScalarConverter::convert( std::string input ){
     try {
         int i = atoi(input.c_str());
@@ -64,13 +90,15 @@ void ScalarConverter::convert( std::string input ){
     }
     try {
         float f = atof(input.c_str());
-        std::cout << "float: " << f << ".0f" << std::endl;
+        std::cout << "float: " << f;
+        (f - static_cast<int>(f) == 0)?std::cout << ".0f" << std::endl : std::cout << "f" << std::endl;
     } catch (std::exception &e) {
         std::cout << "float: " << e.what() << std::endl;
     }
     try {
         double d = atof(input.c_str());
-        std::cout << "double: " << d << ".0" << std::endl;
+        std::cout << "double: " << d;
+        (d - static_cast<int>(d) == 0)?std::cout << ".0" << std::endl : std::cout << std::endl;
     } catch (std::exception &e) {
         std::cout << "double: " << e.what() << std::endl;
     }

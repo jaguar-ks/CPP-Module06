@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 13:21:51 by faksouss          #+#    #+#             */
-/*   Updated: 2023/11/04 15:22:02 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:15:07 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,5 @@ class ScalarConverter {
                 virtual const char *what() const throw();
         };
 };
+
+bool validInput( std::string input );

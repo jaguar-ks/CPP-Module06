@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 14:04:14 by faksouss          #+#    #+#             */
-/*   Updated: 2023/11/04 14:11:05 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:16:37 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int main( int ac, char **av ) {
     std::string input = av[1];
     input.erase(0, input.find_first_not_of(" \t\n\v\f\r"));
     input.erase(input.find_last_not_of(" \t\n\v\f\r") + 1);
-    ScalarConverter sc(input);
-    
+    if (validInput(input)){
+        ScalarConverter::convert(input);
+        return 0;
+    }
+    else {
+        std::cerr << "Invalide input" << std::endl << "\tUsage: ./convert [number(int/float/double)]" << std::endl;
+        return 1;
+    }
 }
