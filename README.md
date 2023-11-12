@@ -5,7 +5,7 @@
 1. [Type Conversion in C++.](#type-conversion-in-c)
     1. [Implicite Type Conversion.](#implicite-type-conversion)
     1. [Explicit Type Conversion.](#explicit-type-conversion)
-1. [Cast operator in C++.](#cast-operator-in-c)
+1. [Cast operator in C++.](#cast-operators-in-c)
     1. [Static Cast.](#static-cast)
     1. [Reinterpret Cast.](#reinterpret-cast)
     1. [Dynamic Cast](#dynamic-cast)
