@@ -151,4 +151,39 @@ This code above will output:
 > It is important to exercise caution when using reinterpret_cast, as it bypasses the standard type system and can lead to potential errors if misused. It should only be used when absolutely necessary and with a thorough understanding of the implications, also note that reinterpret_cast should be used sparingly, and it is generally recommended to use more specific casting operators (such as static_cast or dynamic_cast) when possible, as they provide more type safety and are easier to reason about.
 ---
 ### ***Dynamic Cast:***
+In C++, dynamic casting is mainly used for safe downcasting at run time. To work on dynamic_cast there must be one virtual function in the base class. A dynamic_cast works only polymorphic base class because it uses this information to decide safe downcasting. The dynamic cast uses the Run-Time Type Identification (RTTI) mechanism to make all information about the data type of an object available at the run-time. The information is available only for classes with at least one virtual function.
+**Syntax:**
+```c++
+    dynamic_cast<dest_type>(source);
+```
+For example:
+```c++
+#include <iostream>
+using namespace std;
 
+class Base {
+  public:
+    virtual void print() {}
+};
+
+class Derived: public Base {};
+
+int main() {
+  Base* b = new Derived;
+  Derived* d = dynamic_cast <Derived*> (b);
+
+  if (d != NULL) {
+    cout << "dynamic_cast done" << endl;
+  } else {
+    cout << "dynamic_cast not done" << endl;
+  }
+
+  return 0;
+}
+```
+The code above will output:
+```shell
+    $> dynamic_cast done
+```
+**NOTICE:**
+> If the conversion is not possible, dynamic_cast returns a null pointer (for pointer conversions) or throws a bad_cast exception (for reference conversions).
