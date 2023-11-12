@@ -7,6 +7,8 @@
     1. [Explicit Type Conversion.](#explicit-type-conversion)
 1. [Cast operator in C++.](#cast-operator-in-c)
     1. [Static Cast.](#static-cast)
+    1. [Reinterpret Cast.](#reinterpret-cast)
+    1. [Dynamic Cast](#dynamic-cast)
 ---
 ## **Type Conversion in C++:**
 A type cast is basically a conversion from one type to another. There are two types of type conversion:
@@ -52,8 +54,10 @@ In C++, it can be done by two ways:
 >For example:
 >```c++
 >#include<iostream>
+>
 >using namespace std;
->int main(){
+>
+>int main() {
 >    int x = 65;
 >    cout << x << endl << (char)x;
 >    return 0;
@@ -86,8 +90,10 @@ The return type will be the destination data type.
 For example:
 ```c++
 #include<iostream>
+
 using namespace std;
-int main(){
+
+int main() {
     float x = 1.2f;
     int y = static_cast<int>(f);
     cout << y;
@@ -101,5 +107,48 @@ This code above will output:
 ```
 **NOTICE:**
 > While using the static cast, we must ensure that the datatype being typecasted must be compatible with the new data type. Otherwise, we will get an error.
+---
+### ***Reinterpret Cast:***
 
+It is used to convert a pointer of some data type into a pointer of another data type, even if the data types before and after conversion are different. as well as to convert pointers to integers and vice versa. It allows you to interpret the binary representation of an object of one type as another type.That is why reinterpret cast should not be used unless required.
+
+**Syntax:**
+```c++
+    reinterpret_cast<dest_type>(source);
+```
+For example:
+```c++
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+typedef data {
+    string str;
+    int nbr;
+    data(string s, int n){
+        str = s;
+        nbr = n;
+    }
+} data;
+
+int main() {
+    data *ptr = new data("hello", 10);
+    string *s = reinterpret_cast<string *>(ptr);
+    cout << s << endl;
+    s++;
+    int *n = reinterpret_cast<int *>(s);
+    cout << *i;
+    return 0;
+}
+```
+This code above will output:
+```shell
+    $> hello
+       10
+```
+**NOTICE:**
+> It is important to exercise caution when using reinterpret_cast, as it bypasses the standard type system and can lead to potential errors if misused. It should only be used when absolutely necessary and with a thorough understanding of the implications, also note that reinterpret_cast should be used sparingly, and it is generally recommended to use more specific casting operators (such as static_cast or dynamic_cast) when possible, as they provide more type safety and are easier to reason about.
+---
+### ***Dynamic Cast:***
 
