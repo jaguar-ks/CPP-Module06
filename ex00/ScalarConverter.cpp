@@ -6,11 +6,16 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 13:28:18 by faksouss          #+#    #+#             */
-/*   Updated: 2023/11/05 19:28:22 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:21:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <_ctype.h>
+#include <algorithm>
+#include <cmath>
+#include <iterator>
+#include <string>
 
 ScalarConverter::ScalarConverter( void ){}
 
@@ -31,20 +36,13 @@ const char *ScalarConverter::ImpossibleException::what() const throw(){
     return "impossible";
 }
 
-const char *ScalarConverter::CharException::what() const throw(){
-    return "impossible to convert to char";
-}
-
-const char *ScalarConverter::IntException::what() const throw(){
-    return "impossible to convert to int";
-}
-
-const char *ScalarConverter::FloatException::what() const throw(){
-    return "impossible to convert to float";
-}
-
-const char *ScalarConverter::DoubleException::what() const throw(){
-    return "impossible to convert to double";
+bool checkDot( std::string &input ){
+    size_t found = input.find('.', 0);
+    if (found == std::string::npos)
+        return true;
+    else if (found + 1 < input.size() && input.find('.', found + 1) == std::string::npos)
+        return true;
+    return false;
 }
 
 bool validInput( std::string input ){
@@ -53,20 +51,17 @@ bool validInput( std::string input ){
     if (input == "nan" || input == "nanf" || input == "-inf" || input == "+inf" || input == "-inff" || input == "+inff")
         return true;
     else {
-        if (input[0] == '-' || input[0] == '+')
-            input.erase(0, 1);
-        if (input.empty())
+        int dot=checkDot(input);
+        if (!dot)
             return false;
-        int dot = 0;
-        for (int i = 0; i < (int)input.length(); i++) {
-            if (input[i] == '.'){
-                if (dot == 1)
-                    return false;
-                dot++;
-            }
-            else if (isdigit(input[i]) == false && input[i] != 'f')
-                return false;
-            else if (input[i] == 'f' && i != (int)input.length() - 1)
+        for (size_t i=(input[0] == '-' || input[1] == '+'); i < input.size(); i++){
+            if (isdigit(input.at(i)))
+                continue;
+            if (input.at(i) == '.' && isdigit(input.at(i+1)))
+                continue;
+            if (input.at(i) == 'f' && i+1 == input.size())
+                    break;
+            else
                 return false;
         }
         return true;
@@ -74,31 +69,35 @@ bool validInput( std::string input ){
 }
 
 void ScalarConverter::convert( std::string input ){
+    double x = atof(input.c_str());
     try {
-        int i = atoi(input.c_str());
-        if (isprint(i) == false)
+        char c = static_cast<char>(x);
+        if (input == "nan" || input == "nanf" || input == "-inf" || input == "+inf" || input == "-inff" || input == "+inff")
+            throw ImpossibleException();
+        if (isprint(c) == false)
             throw NonDisplayableException();
-        std::cout << "char: '" << static_cast<char>(i) << "'" << std::endl;
+        std::cout << "char: '" << c << "'" << std::endl;
     } catch (std::exception &e) {
         std::cout << "char: " << e.what() << std::endl;
     }
     try {
-        int i = atoi(input.c_str());
+        if (input == "nan" || input == "nanf" || input == "-inf" || input == "+inf" || input == "-inff" || input == "+inff")
+            throw ImpossibleException();
+        int i = static_cast<int>(x);
         std::cout << "int: " << i << std::endl;
     } catch (std::exception &e) {
         std::cout << "int: " << e.what() << std::endl;
     }
     try {
-        float f = atof(input.c_str());
+        float f = static_cast<float>(x);
         std::cout << "float: " << f;
         (f - static_cast<int>(f) == 0)?std::cout << ".0f" << std::endl : std::cout << "f" << std::endl;
     } catch (std::exception &e) {
         std::cout << "float: " << e.what() << std::endl;
     }
     try {
-        double d = atof(input.c_str());
-        std::cout << "double: " << d;
-        (d - static_cast<int>(d) == 0)?std::cout << ".0" << std::endl : std::cout << std::endl;
+        std::cout << "double: " << x;
+        (x - static_cast<int>(x) == 0)?std::cout << ".0" << std::endl : std::cout << std::endl;
     } catch (std::exception &e) {
         std::cout << "double: " << e.what() << std::endl;
     }

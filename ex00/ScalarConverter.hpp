@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 13:21:51 by faksouss          #+#    #+#             */
-/*   Updated: 2023/11/05 19:15:07 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:21:45 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,6 @@ class ScalarConverter {
                 virtual const char *what() const throw();
         };
         class ImpossibleException : public std::exception {
-            public:
-                virtual const char *what() const throw();
-        };
-        class CharException : public std::exception {
-            public:
-                virtual const char *what() const throw();
-        };
-        class IntException : public std::exception {
-            public:
-                virtual const char *what() const throw();
-        };
-        class FloatException : public std::exception {
-            public:
-                virtual const char *what() const throw();
-        };
-        class DoubleException : public std::exception {
             public:
                 virtual const char *what() const throw();
         };
