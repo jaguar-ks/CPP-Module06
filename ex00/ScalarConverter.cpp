@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 13:28:18 by faksouss          #+#    #+#             */
-/*   Updated: 2023/11/12 06:21:29 by faksouss         ###   ########.fr       */
+/*   Updated: 2023/11/12 06:28:14 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool checkDot( std::string &input ){
     size_t found = input.find('.', 0);
     if (found == std::string::npos)
         return true;
-    else if (found + 1 < input.size() && input.find('.', found + 1) == std::string::npos)
+    else if (found + 1 <= input.size() && input.find('.', found + 1) == std::string::npos)
         return true;
     return false;
 }
@@ -57,7 +57,7 @@ bool validInput( std::string input ){
         for (size_t i=(input[0] == '-' || input[1] == '+'); i < input.size(); i++){
             if (isdigit(input.at(i)))
                 continue;
-            if (input.at(i) == '.' && isdigit(input.at(i+1)))
+            if (input.at(i) == '.')
                 continue;
             if (input.at(i) == 'f' && i+1 == input.size())
                     break;
