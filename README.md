@@ -9,6 +9,7 @@
     1. [Static Cast.](#static-cast)
     1. [Reinterpret Cast.](#reinterpret-cast)
     1. [Dynamic Cast](#dynamic-cast)
+1. [FinalMark & Author.](#finalmark--author)
 ---
 ## **Type Conversion in C++:**
 A type cast is basically a conversion from one type to another. There are two types of type conversion:
@@ -187,3 +188,8 @@ The code above will output:
 ```
 **NOTICE:**
 > If the conversion is not possible, dynamic_cast returns a null pointer (for pointer conversions) or throws a bad_cast exception (for reference conversions).
+---
+## **FinalMark & Author:**
+![finalmark](finalmark.png)
+
+**Author:**[jaguar-ks](https://github.com/jaguar-ks)
